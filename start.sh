@@ -7,7 +7,7 @@ for i in $(seq 1 20); do
       --MaxCircuitDirtiness 10 \
       --PidFile /var/run/tor/$i.pid \
       --RunAsDaemon 1 \
-      --Log "info file /var/log/tor/$i.log" \
+      --Log "notice file /var/log/tor/$i.log" \
       --DataDirectory /var/db/tor/$i
 done
 
