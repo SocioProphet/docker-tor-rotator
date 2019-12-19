@@ -47,6 +47,21 @@ $ curl --socks5 127.0.0.1:9050 wtfismyip.com/text
 199.249.230.72
 ```
 
+If these tests don't work right away, it is possible that your Tor instances
+are still bootstrapping. Try waiting a few minutes and then trying again.
+
 You can also view the HAProxy status page by going to `http://localhost:8000`.
+
+# Customizing the number of Tor instances
+
+The Docker build is a parameterized so that you can customize the number of Tor
+instances that are configured. For example, to build an image with only 3 Tor
+instances, set the following build argument:
+
+```
+$ docker build -t tor-rotator --build-arg TOR_COUNT=3 .
+```
+
+The resulting image can be run the same way as the default image.
 
 <a href="https://www.hyperiongray.com/?pk_campaign=github&pk_kwd=docker-tor-rotator"><img alt="define hyperion gray" width="500px" src="https://hyperiongray.s3.amazonaws.com/define-hg.svg"></a>

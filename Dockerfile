@@ -14,7 +14,9 @@ RUN apt-get install -y haproxy
 
 ADD ./haproxy.conf /etc/default/haproxy.conf
 
-RUN for i in $(seq 1 ${TOR_COUNT:-20}); do \
+ARG TOR_COUNT
+ENV TOR_COUNT ${TOR_COUNT:-20}
+RUN for i in $(seq 1 $TOR_COUNT); do \
         port=$((9050 + $i)); \
         mkdir -p /var/db/tor/$i; \
         echo "  server 127.0.0.1:$port 127.0.0.1:$port check" >> /etc/default/haproxy.conf; \
@@ -23,7 +25,5 @@ RUN for i in $(seq 1 ${TOR_COUNT:-20}); do \
 RUN mkdir /var/run/tor
 ADD start.sh /
 RUN chmod +x /start.sh
-
-EXPOSE 9050
 
 CMD ["./start.sh"]
