@@ -13,4 +13,4 @@ for i in $(seq 1 ${TOR_COUNT:-20}); do
 done
 
 echo "=== Starting HAProxy ==="
-haproxy -f /etc/default/haproxy.conf -q -db
+exec haproxy -f /etc/default/haproxy.conf -q -db

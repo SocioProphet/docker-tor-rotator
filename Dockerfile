@@ -1,16 +1,7 @@
 FROM ubuntu:18.04
 
-RUN apt-get update
-RUN apt-get install -y build-essential
-RUN apt-get install -y libevent-dev
-RUN apt-get install -y libssl-dev
-RUN apt-get install -y htop
-RUN apt-get install -y iotop
-RUN apt-get install -y tmux
-RUN apt-get install -y curl
-RUN apt-get install -y g++
-RUN apt-get install -y tor
-RUN apt-get install -y haproxy
+RUN apt-get update && \
+    apt-get install -y dumb-init haproxy tor
 
 ADD ./haproxy.conf /etc/default/haproxy.conf
 
@@ -26,4 +17,6 @@ RUN mkdir /var/run/tor
 ADD start.sh /
 RUN chmod +x /start.sh
 
-CMD ["./start.sh"]
+STOPSIGNAL SIGUSR1
+ENTRYPOINT ["/usr/bin/dumb-init", "--"]
+CMD ["/bin/sh", "start.sh"]
